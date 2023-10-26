@@ -1,6 +1,7 @@
 const PlayerRegistrationData = {};
 var NumberOfUser = 1;
 var check = "false";
+var LoggedInUser;
 var Gen;
 
 /*Variables that stores the two random generate number*/
@@ -109,10 +110,9 @@ function calculateAge(id , Age, label){
     if (age < 9 || age > 12) {
         window.alert(age + ' years old does not meet the player requirement');  
     } else if (age > 8 && age < 13) {
-        window.alert(message);
         document.getElementById(Age).removeAttribute('disabled');
         document.getElementById(Age).setAttribute("value", age);
-        // document.getElementById(label).style.top = "5px";
+        document.getElementById(label).style.top = "5px";
         document.getElementById(Age).setAttribute('disabled',true);
         // Using Set attribute method.
     }
@@ -187,6 +187,7 @@ function UserLogin(event){
     console.log(check)
     if (check === true){
         window.alert("A match found!\nPlease Continue to Start game."); 
+        LoggedInUser = document.getElementById(firstnameId).value;
         iconClose()
     }else if(check === false){
         window.alert("No such user match found!\nPlease Try registering."); 
@@ -207,7 +208,7 @@ function StoreUserRegistration(){
     // PlayerRegistrationData[i] = [{fname, lname,  DOB , Gen}];
     console.log(NumberOfUser);
     PlayerRegistrationData[fname] = [fname, lname,  DOB , Gen, fname+lname+"@gmail.com", 0 ,0];
-    window.alert("Info Updated");
+    LoggedInUser = fname;
     NumberOfUser++;   
 
     console.log(PlayerRegistrationData);
@@ -217,7 +218,7 @@ function StoreUserRegistration(){
 /*These function handle the the playing of the game */
 
 /*This funcation fires whne the User clicks the submit button and vaildtes the answer*/
-function submitAnswerFunction(){
+function checkAnswer(){
     let correctAns = int1*int2;
     let userAns = userAnswer.value;
 
@@ -228,10 +229,13 @@ function submitAnswerFunction(){
 
     if(newuserAns === correctAns){
         window.alert("the user entered the correct answer");
+        PlayerRegistrationData[LoggedInUser][5] += 1;
     }
     else{
        window.alert("That was the wrong number"+"\n"+"the correct answer is "+ correctAns +"\n"+"the user answer is " + newuserAns);
+       PlayerRegistrationData[LoggedInUser][6] += 1;
     }
+    showAllStats()
 }
 
 /*This function Generates the random numbers*/
@@ -302,7 +306,6 @@ function findPercentageScore(){
     cell4.appendChild(document.createTextNode("incorrect equations"));
 
     for (let key in PlayerRegistrationData) {
-        alert("storage");
         // table row creation
         var row = tbl.insertRow();
     
@@ -312,14 +315,13 @@ function findPercentageScore(){
                 //Make text node the contents of <td> element
                 // put <td> at end of the table row
                 /*Create a The row for the data */
+                var cell = row.insertCell();
                 if(i == 0 || i == 5 || i == 6){
-                    var cell = row.insertCell();
                     cellText = document.createTextNode(PlayerRegistrationData[key].at(i));
                     cell.appendChild(cellText);
                     console.log(PlayerRegistrationData[key].at(i));
                 }else if (i == 1){
                     var percentageScore = PlayerRegistrationData[key].at(5)/(PlayerRegistrationData[key].at(5) + PlayerRegistrationData[key].at(6));
-                    var cell = row.insertCell();
                     cellText = document.createTextNode(percentageScore * 100);
                     cell.appendChild(cellText);
                 }
@@ -330,7 +332,52 @@ function findPercentageScore(){
 
 }
 
+function showAllStats(){
+    if (document.getElementById("showPlayerDiv")) {
+        console.log("Div removed")
+        document.getElementById("showPlayerDiv").remove()
+    }
+    var MainTableRow = document.getElementById("showallplayers");
+    // create elements <table> and a <tbody>
+    var Div1 = document.createElement("div");
+    Div1.style.width = '100%';
+    Div1.style.border = '1px solid black';
+    Div1.className = "showAllPlayerDiv"
+    Div1.id = "showPlayerDiv"
+   
+
+    for (let key in PlayerRegistrationData) {
+        // table row creation  
+        console.log(PlayerRegistrationData[key]);  
+        var cell = document.createElement("div");
+        cell.className = "showAllPlayerDiv"
+        cell.id = PlayerRegistrationData[key].at(0)
+            for (var i = 0; i < PlayerRegistrationData[key].length; i++) {
+                // create element <td> and text node 
+                //Make text node the contents of <td> element
+                // put <td> at end of the table row
+                /*Create a The row for the data */
+                if(i == 0 || i == 5 || i == 6){
+                    cellText = document.createTextNode(PlayerRegistrationData[key].at(i));
+                    var breakeTag = document.createElement("br");
+                    cell.appendChild(cellText); cell.appendChild(breakeTag);
+                }else if (i == 1){
+                    var percentageScore = PlayerRegistrationData[key].at(5)/(PlayerRegistrationData[key].at(5) + PlayerRegistrationData[key].at(6));
+                    cellText = document.createTextNode(percentageScore * 100);
+                    var breakeTag = document.createElement("br");
+                    cell.appendChild(cellText); cell.appendChild(breakeTag);
+
+                }
+            }   
+        Div1.appendChild(cell)     
+    }
+
+    MainTableRow.appendChild(Div1);
+
+}
+
 function StartGame(){
+    if (!LoggedInUser) {alert("Please Loggin First"); return;}
     var playArea = document.getElementById("area");
     //var showpercentageTable = document.getElementById("showPercentageTable");
 
@@ -349,7 +396,7 @@ function EndGame(){
     findPercentageScore()
 }
 
-submitAnswer.addEventListener("click",submitAnswerFunction)
+submitAnswer.addEventListener("click",checkAnswer)
 Next.addEventListener("click",playgame)
 StartGameButton.addEventListener("click",StartGame)
 EndGameButton.addEventListener("click",EndGame)
