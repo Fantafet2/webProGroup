@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Assets/imgs/Math-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="boxicons-2.1.4/css/boxicons.css">
+    <link rel="stylesheet" href="Math-Animated.css">
+    <title>Math-Animated | Login and Registration</title>
+</head>
+<body>
+    <table class="MainTable">
+        <!-- Display Nav on Larger screens  -->
+        <tr class="Menu1">
+            <th id="header">
+                <h2 class="logo">Math Calculator</h2>
+            </th>
+            <th class="navigation">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+                <button class="btnLogin-popup" id="btnSignIn" onclick="signIn()">Login</button>
+            </th>
+        </tr>
+        <!-- Display Nav on smaller screens  -->
+        <tr class="Menu2">
+            <th id="header">
+                <h2 class="logo">Math Calculator</h2>
+            </th>
+        </tr>
+        <tr class="Menu2">
+            <th class="navigation">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+                <button class="btnLogin-popup" onclick="signIn()">Login</button>
+            </th>
+        </tr>
+
+        <tr style="text-align: center;">
+            <td colspan="2">
+
+                <!-- Login Form -->
+                <div id="wrapper1" class="wrapper"> 
+                    <span class="icon-close" onclick="iconClose()">
+                        <i class="bx bx-x"></i>
+                    </span>
+
+                    <div class="form-box login">
+                        <h2>Login</h2>
+                        <form id="login" action="" method="post">
+                            
+                            <fieldset>
+                                <legend>Player Info</legend>
+                                <span class="icon"><i class='bx bx-user-circle'></i></span>
+
+                                <div class="input">
+                                    <input type="text" id="firstName" minlength="3" required>
+                                    <label id="firstName_Label">First Name</label>
+                                </div>
+
+                                <div class="input">
+                                    <input type="text" id="lastName" minlength="3" required>
+                                    <label id="lastName_Label">Last Name</label>
+                                </div>
+
+                                <div class="input">
+                                    <input id="DOB" type="text" onclick="typeChanger()" onkeyup="calculateAge('DOB','Age', 'Age_Label')" onblur="calculateAge('DOB', 'Age')" required> 
+                                    <label id="DOB_Label">Date Of Birth</label>
+                                </div>
+
+                                <div class="input">
+                                    <input type="number" id="Age" min="9" max="12" autocomplete="off" disabled>
+                                    <label id="Age_Label">Age</label>
+                                </div>
+
+                            </fieldset>
+                            <br>
+                            <div class="remember-forget">
+                                <label><input type="checkbox">  Remember me</label>
+                                <a href="#" style="position: relative; right: 20px;top: 5px;">Forget Password?</a>
+                            </div>
+                            <input type="submit" class="btn" value="Login" onclick="UserLogin()">
+                            <div class="login-register">
+                                <p>Don't have an account?
+                                    <a href="#" class="register-link" onclick="registerPage()">Register</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div id="wrapper2" class="wrapper"> 
+                    <span class="icon-close" onclick="iconClose()">
+                        <i class="bx bx-x"></i>
+                    </span>
+                    <div class="form-box register">
+                        <h2>Registration</h2>
+                        <form id="register" onsubmit="Register(), StoreUserRegistration()" method="post">
+                            
+                            <fieldset>
+                                <legend>Player Info</legend>
+                                <span class="icon"><i class='bx bx-user-circle'></i></span>
+
+                                <div class="input">
+                                    <input type="text" id="firstName2" minlength="3" required>
+                                    <label id="firstName_Label">First Name</label>
+                                </div>
+
+                                <div class="input">
+                                    <input type="text" id="lastName2" minlength="3" required>
+                                    <label id="lastName_Label">Last Name</label>
+                                </div>
+
+                                <div class="input">
+                                    <input id="DOB2" type="text" onclick="typeChanger()" onkeyup="calculateAge('DOB2','Age2', 'Age_Label2')" onblur="calculateAge('DOB2', 'Age2')" required> 
+                                    <label id="DOB_Label">Date Of Birth</label>
+                                </div>
+
+                                <div class="input">
+                                    <input type="number" id="Age2" min="9" max="12" autocomplete="off" disabled>
+                                    <label id="Age_Label2">Age</label>
+                                </div>
+
+                                <div class="genderType">
+                                    <h3 style="text-align: left;">Gender</h3>
+                                    <input type="radio" name="Gender" id="Male2" required>
+                                    <label for="Male2">Male</label>
+                                    <br>
+                                    <input type="radio" name="Gender" id="Female2" required>
+                                    <label for="Female2">Female</label>
+                                    <br>
+                                    <br>
+                                </div>
+
+                            </fieldset>
+                            <br>
+                            <div class="remember-forget">
+                                <label><input type="checkbox">  I agree to the terms and conditions</label>
+                                <a href="#" style="position: relative; right: 20px;top: 5px;">Forget Password?</a>
+                            </div>
+
+                            <input id="registerBtn" type="submit" class="btn" value="Register">
+                            <div class="login-register">
+                                <p>Already have an account?
+                                    <a href="#" class="register-link" onclick="loginPage()">Login</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div class="StartGameDiv" id="StartDiv" style=" width: 10%; height: 50px; border-radius: 50px; position: relative; left: 45%; display: flex;">
+                    <input id="StartGame" type="submit" value="Start">
+                </div>
+            
+                <div class = "area" id = "area">
+            
+                    <div class="UserInput">
+                        <input id="answerbox" type="number" placeholder = "Enter your answer">
+                        <input id="CheckAnswer" type="submit" value="CheckAnswer">
+                    </div>
+            
+                    <div class="maintable">
+                    
+                        <div class="allnums">
+            
+                            <img id="multisymb" src="../Assets/imgs/symbols/multiplicationSymbol.jpg" alt="">
+                            <img id="equsymb" src="../Assets/imgs/symbols/equalSymbol.jpg" alt="">
+                            <img id="answer" class="numimgs" src="../Assets/imgs/numbers/Image1.jpg" alt="">
+            
+                            <div class="int1nums">
+                                <img id="img1" class="numimgs" src="../Assets/imgs/numbers/Image1.jpg" alt="">
+            
+                                <img id="img2" class="numimgs" src="../Assets/imgs/numbers/Image1.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="Next" style=" width: 10%; height: 50%; border-radius: 50px; position: relative; text-align-last: center; display: flex;">
+                        <input id="NextButton" type="submit" value="Next">
+                        <input id="EndGame" type="submit" value="End">
+                    </div>
+            
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="ScoreTableRow" id="showPercentageRow">
+               
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan="2">
+               <footer>
+                Created by Maleick Williams,Of student Id: 2111578.
+               </footer> 
+            </td>
+        </tr>
+
+    </table>
+
+   
+    
+    <script src="Math-Animated.js"></script>
+</body>
+</html>
