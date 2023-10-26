@@ -51,8 +51,7 @@
 
                     <div class="form-box login">
                         <h2>Login</h2>
-                        <form id="login" action="" method="post">
-                            
+                        <form id="login" onsubmit="UserLogin(event)" method="post">
                             <fieldset>
                                 <legend>Player Info</legend>
                                 <span class="icon"><i class='bx bx-user-circle'></i></span>
@@ -68,7 +67,7 @@
                                 </div>
 
                                 <div class="input">
-                                    <input id="DOB" type="text" onclick="typeChanger()" onkeyup="calculateAge('DOB','Age', 'Age_Label')" onblur="calculateAge('DOB', 'Age')" required> 
+                                    <input id="DOB" type="text" onclick="typeChanger()" onkeyup="calculateAge('DOB','Age', 'Age_Label')" onblur="calculateAge('DOB', 'Age', 'Age_Label')" required> 
                                     <label id="DOB_Label">Date Of Birth</label>
                                 </div>
 
@@ -83,7 +82,7 @@
                                 <label><input type="checkbox">  Remember me</label>
                                 <a href="#" style="position: relative; right: 20px;top: 5px;">Forget Password?</a>
                             </div>
-                            <input type="submit" class="btn" value="Login" onclick="UserLogin()">
+                            <input type="submit" id = "loginBtn" class="btn" value="Login">
                             <div class="login-register">
                                 <p>Don't have an account?
                                     <a href="#" class="register-link" onclick="registerPage()">Register</a>
@@ -100,7 +99,7 @@
                     </span>
                     <div class="form-box register">
                         <h2>Registration</h2>
-                        <form id="register" onsubmit="Register(), StoreUserRegistration()" method="post">
+                        <form id="register" onsubmit="Register(event)" method="post">
                             
                             <fieldset>
                                 <legend>Player Info</legend>
@@ -117,7 +116,7 @@
                                 </div>
 
                                 <div class="input">
-                                    <input id="DOB2" type="text" onclick="typeChanger()" onkeyup="calculateAge('DOB2','Age2', 'Age_Label2')" onblur="calculateAge('DOB2', 'Age2')" required> 
+                                    <input id="DOB2" type="text" onclick="typeChanger()" onkeyup="calculateAge('DOB2','Age2', 'Age_Label2')" onblur="calculateAge('DOB2', 'Age2', 'Age_Label2')" required> 
                                     <label id="DOB_Label">Date Of Birth</label>
                                 </div>
 

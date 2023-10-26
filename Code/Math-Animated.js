@@ -1,4 +1,4 @@
-const storage_store = [];
+const PlayerRegistrationData = {};
 var NumberOfUser = 1;
 var check = "false";
 var Gen;
@@ -25,7 +25,7 @@ var img2 = [document.getElementById("img2"), 2];
 /*Arrys*/
 let int1Images = [img1, img2];
 
-storage_store[0] = ["Maleick", "Brown", "06-08-2014","Male"];
+PlayerRegistrationData["Malick"] = ["Malick", "Brown", "06-08-2014", "Male", "MalBwn1@gmail.com", 8, 1,];
 
 // document.getElementsById("registerBtn").addEventListener('click', Register());
 // document.getElementsById("registerBtn").addEventListener('click', Store());
@@ -121,8 +121,40 @@ function calculateAge(id , Age, label){
     }
 }
 
-function Register() {
-    alert(NumberOfUser);
+function CheckForUser(firstnameId,lastNameId, DOBId){
+    /*Note: In the console, Only the Gen value is read. 
+    Please check the values of the other variables to store. */  
+    
+    /*We the Element from the index Webpage*/
+    var fname = document.getElementById(firstnameId).value;
+    var lname = document.getElementById(lastNameId).value;
+    var DOB = document.getElementById(DOBId).value;
+
+    // PlayerRegistrationData[i] = [{fname, lname,  DOB , Gen}];
+    console.log(PlayerRegistrationData);
+    
+   for (let key in PlayerRegistrationData) {
+        console.log(PlayerRegistrationData[key]);
+        if (fname === PlayerRegistrationData[key].at(0)) {
+            //check = "true";
+            console.log("Found User");
+            return true;
+        }
+    }   
+
+    // for (let counter = 0; counter < NumberOfUser ; counter++) {
+    //     console.log(PlayerRegistrationData[counter]);
+    //     if (fname === PlayerRegistrationData[counter].at(1)) {
+    //         //check = "true";
+    //         console.log("Found User");
+    //         return true;
+    //     }
+    // }    
+    return false;
+};
+
+function Register(event) {
+    if (event){event.preventDefault();}
 
     if (document.getElementById("Male2").checked) {
         Gen = "Male";
@@ -134,36 +166,30 @@ function Register() {
     else{
         Gen = "Non Binary";
     }
+
+    var check = CheckForUser("firstName2", "lastName2", "DOB2");
+
+    console.log(check)
+    if (check === true){
+        window.alert("A match found!\nPlease nagivate to the login page."); 
+        loginPage()
+    }else if(check === false){
+        iconClose()
+        StoreUserRegistration()
+    }       
 }
 
-function CheckForUser(){
-    /*Note: In the console, Only the Gen value is read. 
-    Please check the values of the other variables to store. */  
-    
-    /*We the Element from the index Webpage*/
-    var fname = document.getElementById("firstName2").value;
-    var lname = document.getElementById("lastName2").value;
-    var DOB = document.getElementById("DOB2").value;
+function UserLogin(event){
+    if (event){event.preventDefault();}
 
-    // storage_store[i] = [{fname, lname,  DOB , Gen}];
+    var check = CheckForUser("firstName", "lastName", "DOB");
 
-    for (let counter = 0; counter < NumberOfUser ; counter++) {
-        console.log(storage_store[counter]);
-        alert("storage");
-        if (fname === storage_store[counter].at(0)) {
-            //check = "true";
-            return true;
-        }
-    }    
-    return false;
-};
-
-function UserLogin(){
-    var check = CheckForUser();
-
-    if (check){
-        alert("A match found!\nPlease Continue to Start game."); 
-    }else if(check === "false"){
+    console.log(check)
+    if (check === true){
+        window.alert("A match found!\nPlease Continue to Start game."); 
+        iconClose()
+    }else if(check === false){
+        window.alert("No such user match found!\nPlease Try registering."); 
         registerPage()
     }
 }
@@ -178,18 +204,13 @@ function StoreUserRegistration(){
     var lname = document.getElementById("lastName2").value;
     var DOB = document.getElementById("DOB2").value;
 
-    // storage_store[i] = [{fname, lname,  DOB , Gen}];
-    var check = CheckForUser()
+    // PlayerRegistrationData[i] = [{fname, lname,  DOB , Gen}];
+    console.log(NumberOfUser);
+    PlayerRegistrationData[fname] = [fname, lname,  DOB , Gen, fname+lname+"@gmail.com", 0 ,0];
+    window.alert("Info Updated");
+    NumberOfUser++;   
 
-    console.log(check)
-    if (check === "true"){
-        alert("A match found!\nPlease nagivate to the login page."); 
-        UserLogin()
-    }else if(check === "false"){
-        storage_store[NumberOfUser] = [ fname, lname,  DOB , Gen];
-        alert("Info Updated");
-        NumberOfUser++;   
-    }
+    console.log(PlayerRegistrationData);
     
 };
 
@@ -206,10 +227,10 @@ function submitAnswerFunction(){
     answer.style.transform = "rotateY(10deg)";
 
     if(newuserAns === correctAns){
-        alert("the user entered the correct answer");
+        window.alert("the user entered the correct answer");
     }
     else{
-       alert("That was the wrong number"+"\n"+"the correct answer is "+ correctAns +"\n"+"the user answer is " + newuserAns);
+       window.alert("That was the wrong number"+"\n"+"the correct answer is "+ correctAns +"\n"+"the user answer is " + newuserAns);
     }
 }
 
@@ -280,22 +301,28 @@ function findPercentageScore(){
     var cell4 = rowheader.insertCell();
     cell4.appendChild(document.createTextNode("incorrect equations"));
 
-    for (let counter = 0; counter < NumberOfUser ; counter++) {
+    for (let key in PlayerRegistrationData) {
         alert("storage");
         // table row creation
         var row = tbl.insertRow();
     
-        console.log(storage_store[counter]);
-
-            for (var i = 0; i < 4; i++) {
+        console.log(PlayerRegistrationData[key]);
+            for (var i = 0; i < PlayerRegistrationData[key].length; i++) {
                 // create element <td> and text node 
                 //Make text node the contents of <td> element
                 // put <td> at end of the table row
                 /*Create a The row for the data */
-                var cell = row.insertCell();
-                cellText = document.createTextNode(storage_store[counter].at(i));
-                cell.appendChild(cellText);
-                console.log(storage_store[counter].at(i));
+                if(i == 0 || i == 5 || i == 6){
+                    var cell = row.insertCell();
+                    cellText = document.createTextNode(PlayerRegistrationData[key].at(i));
+                    cell.appendChild(cellText);
+                    console.log(PlayerRegistrationData[key].at(i));
+                }else if (i == 1){
+                    var percentageScore = PlayerRegistrationData[key].at(5)/(PlayerRegistrationData[key].at(5) + PlayerRegistrationData[key].at(6));
+                    var cell = row.insertCell();
+                    cellText = document.createTextNode(percentageScore * 100);
+                    cell.appendChild(cellText);
+                }
             }        
     }
 
