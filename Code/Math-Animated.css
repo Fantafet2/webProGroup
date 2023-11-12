@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Hate Agent', sans-serif;
+    font-family: sans-serif;
 }
 
 table, td, th{
@@ -25,9 +25,58 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 200vh;
-    background: url('../Assets/imgs/MathBackgrounds.jpg') no-repeat;
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(135deg, rgb(22, 51, 92), rgb(195, 195, 222),  rgb(5, 5, 66));
+    overflow-x: hidden;
+}
+
+#bg1, #bg2, #bg3{
+    width: 50px;
+    height: 50px;
+    z-index: -3;
+    top: 15%;
+    position: relative;
+}
+
+#bg4, #bg5, #bg6{
+    width: 50px;
+    height: 50px;
+    z-index: -3;
+    top: 15%;
+    position: relative;
+}
+
+#bg7, #bg8, #bg9{
+    width: 50px;
+    height: 50px;
+    z-index: -3;
+    top: 15%;
+    position: relative;
+}
+
+.test{
+    position: relative;
+    z-index: 10;
+    top: 100px;
+    color: bisque;
+}
+
+.frostBackgroundOverlay{
+    opacity:0.8;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:-1;
+    background-color: rgba(143, 149, 228, 0.188); 
+    backdrop-filter: blur(20px); 
+    border-radius: 10px;
+    margin: 0px;
+}
+
+.addition{
+    position: relative;
+    left: 50%;
 }
 
 /*Francis CSS */ 
@@ -59,17 +108,19 @@ input[type=submit] {
     width: 100%;
     height: 289px;
     border-radius: 50px;
-    background-color: rgb(16, 11, 59);
+    background-color: transparent;
     box-shadow: 20px 20px 60px #000000,
     -20px -20px 60px #5e5d5d;
     position: relative;
+    backdrop-filter: blur(20px); 
+
     /*top: 150px;*/
     display: flex;
   }
   
   .UserInput{
-    width: 10%; height: 50px; border-radius: 50px;
-    background-color: rgb(16, 11, 59);
+    width: 0%;
+    height: 50px; 
     box-shadow: 20px 20px 60px #000000,
     -20px -20px 60px #5e5d5d;
     position: relative;
@@ -326,6 +377,8 @@ fieldset .icon{
     text-decoration: underline;
 
 }
+
+
 .remember-forget label{
     position: relative;
     left: 3px;
@@ -369,4 +422,31 @@ footer{
     .navigation .btnLogin-popup{
         margin-top: 10px;
     }
+}
+
+
+#gameSection{
+    padding: 0px;
+    height: 700px;
+}
+
+.StartGameDiv{
+    margin: 10px;
+    height: 20px;
+}
+
+#CheckAnswer{
+    margin: 10px;
+}
+
+#answerbox{
+    margin: 10px;
+}
+
+#maintable{
+    margin: 10px;
+}
+
+.Next{
+    margin: 10px;
 }
