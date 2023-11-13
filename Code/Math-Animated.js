@@ -5,7 +5,7 @@
 const PlayerRegistrationData = {};
 var NumberOfUser = 1;
 var check = "false";
-var LoggedInUser = "Malick";
+var LoggedInUser = "";
 var Gen;
 let lastscore = -1;
 let lastloggedinuser
@@ -39,13 +39,12 @@ var placeChartpercent = document.createElement('canvas')
 var placeCurrentChartpercent = document.createElement('canvas')
 
 
-//var ctx = document.getElementById('mychart').getContext('2d');
 
 var img1 = [document.getElementById("img1"), 1];
 var img2 = [document.getElementById("img2"), 2];
 
 var bg1 = document.getElementById("bg1")
-var bg2 = document.getElementById("bg2")
+var bg2 = document.getElementById("bg9")
 var bg3 = document.getElementById("bg3")
 
 var bg4 = document.getElementById("bg4")
@@ -54,12 +53,13 @@ var bg6 = document.getElementById("bg6")
 
 var bg7 = document.getElementById("bg7")
 var bg8 = document.getElementById("bg8")
-var bg9 = document.getElementById("bg9")
+var bg9 = document.getElementById("bg2")
 
 /*Arrys*/
 let int1Images = [img1, img2];
 
 PlayerRegistrationData["Malick"] = ["Malick", "Brown", "06-08-2014", "Male", "MalBwn1@gmail.com", 8, 1, 1];
+
 var percentageScore
 // document.getElementsById("registerBtn").addEventListener('click', Register());
 // document.getElementsById("registerBtn").addEventListener('click', Store());
@@ -202,14 +202,20 @@ function Register(event) {
     var check = CheckForUser("firstName2", "lastName2", "DOB2");
     console.log(check)
     if (check === true){
-        window.alert("A match found!\nPlease nagivate to the login page."); 
+        window.alert("Registration attempt failed \n Please try again"); 
         loginPage()
     }else if(check === false){
         iconClose()
         StoreUserRegistration()
+        if(NumberOfUser > 1){
+            StartGame()
+            currentPlayerProgressbar()
+        }
+        StartGameButton.style.display = " inline-block"
     }       
     
 }
+
 
 function UserLogin(event){
     if (event){event.preventDefault();}
@@ -219,8 +225,10 @@ function UserLogin(event){
     console.log(check)
     if (check === true){
         window.alert("A match found!\nPlease Continue to Start game."); 
+        window.alert("Welcome to our multiplication calculator \n to play press start button \n  once the game has started enter the answer you think is correct in the input box provided        ")
         LoggedInUser = document.getElementById("firstName").value;
         console.log("this is logged in user", LoggedInUser)
+        StartGameButton.style.display = " inline-block"
         iconClose()
     }else if(check === false){
         window.alert("No such user match found!\nPlease Try registering."); 
@@ -249,10 +257,31 @@ function StoreUserRegistration(){
     
 };
 
+function currentPlayerProgressbar(){
+    if(progres){
+        progres.remove()
+    }
+    if(loggedInTag){
+        loggedInTag.remove()
+    }
+    loggedInTag = document.createElement('h3')
+    loggedInTag.innerText = LoggedInUser
+
+    findpercentageScoreFunction()
+    gameSection.insertBefore(progres, gameSection.firstChild)
+    gameSection.insertBefore(loggedInTag, gameSection.firstChild)
+
+    progres.style.width = '200px'
+    progres.style.top = '10px'
+}
+
 /*These function handle the the playing of the game */
 var loggedInTag 
 /*This funcation fires whne the User clicks the submit button and vaildtes the answer*/
 function checkAnswer(){
+
+    submitAnswer.disabled = true;
+
     let correctAns = int1*int2;
     let userAns = userAnswer.value;
 
@@ -277,28 +306,19 @@ function checkAnswer(){
     if(newuserAns === correctAns){
         //window.alert("the user entered the correct answer");
         PlayerRegistrationData[LoggedInUser][5] += 1;
+        answer.style.backgroundColor = "rgb(124, 203, 110)";
+        ansp2.style.backgroundColor = "rgb(124, 203, 110)";
     }
     else{
        //window.alert("That was the wrong number"+"\n"+"the correct answer is "+ correctAns +"\n"+"the user answer is " + newuserAns);
        PlayerRegistrationData[LoggedInUser][6] += 1;
+       answer.style.backgroundColor = "rgb(203, 110, 126)";
+       ansp2.style.backgroundColor = "rgb(203, 110, 126)";
     }
     showAllStats()
     
-    if(progres){
-        progres.remove()
-    }
-    if(loggedInTag){
-        loggedInTag.remove()
-    }
-    loggedInTag = document.createElement('h3')
-    loggedInTag.innerText = LoggedInUser
-
-    findpercentageScoreFunction()
-    gameSection.insertBefore(progres, gameSection.firstChild)
-    gameSection.insertBefore(loggedInTag, gameSection.firstChild)
-
-    progres.style.width = '200px'
-    progres.style.top = '10px'
+    currentPlayerProgressbar()
+    
 }
 
 /*This function Generates the random numbers*/
@@ -310,10 +330,10 @@ function getRandomInt(range) {
 }
 
 
-
-
 /*The play game function fire the Generates number function and displays them on the field*/
 function playgame(){
+    submitAnswer.disabled = false;
+
     answer.style.transform = "rotateY(90deg)";
     ansp2.style.transform = "rotateY(90deg)";
 
@@ -453,15 +473,21 @@ function findPercentageScore(){
                     cell.appendChild(cellText);
                     console.log(PlayerRegistrationData[key].at(i));
                 }else if (i == 2){
+
+                    var cell = row.insertCell();
+                    percentageScoreCalculations = PlayerRegistrationData[key].at(5)/(PlayerRegistrationData[key].at(5) + PlayerRegistrationData[key].at(6)) * 100;
+                     percentageScore = percentageScoreCalculations
+                    storecurrentpercent(percentageScore)
+                    cellText = document.createTextNode(percentageScore.toFixed(2) );
+                    var breakeTag = document.createElement("br");
+                    cell.appendChild(cellText); cell.appendChild(breakeTag);
+
+                    
+                    /*
                     var cell = row.insertCell();
                     findpercentageScoreFunction()
-                    cell.appendChild(progres)
+                    cell.appendChild(progres)*/
 
-                    /*
-                    
-                    cellText = document.createTextNode(percentageScore.toFixed(2) );
-                    console.log("percent added cell")
-                    cell.appendChild(cellText);*/
                 }
             }        
     }
@@ -514,9 +540,6 @@ function storecurrentpercent(score){
         }
     
     }
-
-    console.log("==============")
-    console.log(currentPercentArr)
 
     lastloggedinuser = LoggedInUser
     lastscore = score
@@ -586,19 +609,37 @@ function showAllStats(){
 function StartGame(){
     if (!LoggedInUser) {alert("Please Loggin First"); return;}
     var playArea = document.getElementById("area");
-    //var showpercentageTable = document.getElementById("showPercentageTable");
 
-    playArea.style.display = " block"; 
-    //showpercentageTable.style.display = "none";
+    if (document.getElementById("showPercentageTable")){
+        console.log("Table removed")
+        document.getElementById("showPercentageTable").display = "none";
+    }
+
+    window.location.href = "#GameArea";
+
+    playArea.style.display = " block";
+
+    StartGameButton.style.display = "none";
+
     playgame()
 }
 
 function EndGame(){
     var playArea = document.getElementById("area");
-    //var showpercentageTable = document.getElementById("showpercentage");
+    //var showpercentageTable = document.getElementById("showPercentageTable");
+
+    if (document.getElementById("showPercentageTable")){
+        console.log("Table removed")
+        document.getElementById("showPercentageTable").display = " block";
+    }
 
     playArea.style.display = "none";
+
     //showpercentageTable.style.display = " block";
+
+    LoggedInUser = null;
+
+    console.log(LoggedInUser + " End Game Why");
 
     findPercentageScore()
 }
@@ -744,9 +785,6 @@ function genderfrequency(male,female){
         }
     };
 
-       /* if(chart1){
-            chart1.remove()
-        }*/
         
         chart1 = new Chart(
             document.getElementById('genderfrequency'),
@@ -792,13 +830,14 @@ function callgenderchart(){
     },5000)
 }
 
-
-submitAnswer.addEventListener("click",checkAnswer)
-Next.addEventListener("click",playgame)
-StartGameButton.addEventListener("click",StartGame)
-EndGameButton.addEventListener("click",EndGame)
-findPercentButton.addEventListener("click",findPercentageScore)
-showCharts.addEventListener('click', callgenderchart)
+let checkanswerstate = 0
+//submitAnswer.addEventListener("click",checkAnswer)
+//Next.addEventListener("click",playgame)
+//StartGameButton.addEventListener("click",StartGame)
+//EndGameButton.addEventListener("click",EndGame)
+//findPercentButton.addEventListener("click",findPercentageScore)
+//showCharts.addEventListener('click', callgenderchart)
+callgenderchart()
 
 
 function backTrack(bg1h,bg1v,bg2h,bg2v,bg3h,bg3v,bg4h,bg4v,bg5h,bg5v,bg6h,bg6v,bg7v,bg7h,bg8v,bg8h)                    

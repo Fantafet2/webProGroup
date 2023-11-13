@@ -38,19 +38,22 @@
                 <h2 class="logo">Math Calculator</h2>
             </th>
             <th class="navigation">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <button class="btnLogin-popup" id="btnSignIn" onclick="signIn()">Login</button>
+                <button style="display: none;" class="btnLogin-popup" id="StartGame" onclick="StartGame()">Start</button>
             </th>
         </tr>
+        
         <!-- Display Nav on smaller screens  -->
         <tr class="Menu2">
             <th id="header">
                 <h2 class="logo">Math Calculator</h2>
             </th>
         </tr>
+
         <tr class="Menu2">
             <th class="navigation">
                 <li><a href="#">Home</a></li>
@@ -58,6 +61,7 @@
                 <li><a href="#">Services</a></li>
                 <li><a href="#">Contact</a></li>
                 <button class="btnLogin-popup" onclick="signIn()">Login</button>
+                <button style="display: none;" class="btnLogin-popup" id="StartGame" onclick="StartGame()">Start</button>
             </th>
         </tr>
 
@@ -175,19 +179,20 @@
                 </div>
             </td>
         </tr>
-
-
+        
         <tr id="gameSection">
             <td id="gameSectiontd" colspan="2">
-                <div class="StartGameDiv" id="StartDiv" style=" width: 10%; height: 50px; border-radius: 50px; position: relative; left: 45%; display: flex;">
+                <!--<div class="StartGameDiv" id="StartDiv" style=" width: 10%; height: 50px; border-radius: 50px; position: relative; left: 45%; display: flex;">
                     <input id="StartGame" type="submit" value="Start">
-                </div>
+                </div>-->
+
+                <a name = GameArea></a>
+
+                <div class = "area" id = "area" style="display: none;">
             
-                <div class = "area" id = "area">
-            
-                    <div class="UserInput">
+                    <div class="UserInput" style="margin-bottom: 4%;">
                         <input id="answerbox" type="number" placeholder = "Enter your answer">
-                        <input id="CheckAnswer" type="submit" value="CheckAnswer">
+                        <button style="margin-top: 5%;" class="playButtons" id="CheckAnswer" onclick="checkAnswer()">CheckAnswer</button>
                     </div>
             
                     <div class="maintable">
@@ -204,14 +209,15 @@
             
                                 <img id="img2" class="numimgs" src="../Assets/imgs/numbers/Image1.jpg" alt="">
                             </div>
+
                         </div>
+                        
                     </div>
                    
-                    <div class="Next" style=" width: 10%; height: 50%; border-radius: 50px; position: relative; text-align-last: center; display: flex;">
-                        <input id="NextButton" type="submit" value="Next">
-                        <input id="EndGame" type="submit" value="End">
-                        <input id="showChart" type="submit" value="Show Charts">
-                        <input id="findPercent" type="submit" value="Find Percent">
+                    <div class="Next" style="margin-top: 2%;">
+                        <button class="playButtons" id="NextButton" onclick="playgame()">Next</button>
+                        <button class="playButtons" id="EndGame" onclick="EndGame()">End</button>
+                        <button class="playButtons" id="findPercent" onclick="findPercentageScore()">FindPercent</button>
                     </div>
             
                 </div>
@@ -232,17 +238,17 @@
         </tr>
 
         <tr>
-            <td colspan="2" id="genderchart">
+            <td colspan="2" class="chart" id="genderchart">
 
             </td>
         </tr>
         <tr>
-            <td colspan="2" id="percentchart">
+            <td colspan="2" class="chart" id="percentchart">
 
             </td>
         </tr>
         <tr>
-            <td colspan="2" id="MosrRecentpercentchart">
+            <td colspan="2" class="chart" id="MosrRecentpercentchart">
 
             </td>
         </tr>
