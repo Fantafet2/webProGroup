@@ -297,10 +297,16 @@ footer{
     }
 
     .Menu2{
-        display: table-row ;
+        display: table-row;
     }
     .navigation .btnLogin-popup{
         margin-top: 10px;
+    }
+    .table1, #contact_label{
+        display: none;
+    }
+    .table2{
+        display: table-row ;
     }
 }
 
@@ -347,7 +353,9 @@ h1, p, #paragraph, #paragraph li{
 #contact_table th{
     text-align: left;
 }
-
+.table2{
+    display: none;
+}
 footer{
     text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
