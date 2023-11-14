@@ -8,7 +8,6 @@
 }
 
 table, td, th{
-    padding: 10px;
     border-spacing: 30px;
     border: none;
     width: 100%;
@@ -31,7 +30,7 @@ body{
     overflow-x: hidden;
 }
 
-#header{
+#header, #header2{
     padding: 20px 100px;
     /* background: blue; */
     display: flex;
@@ -80,7 +79,7 @@ body{
     transform: scaleX(1);
 }
 
-.navigation .btnLogin-popup{
+.btnLogin-popup{
     width: 130px;
     height: 50px;
     background:transparent;
@@ -95,7 +94,7 @@ body{
     transition: .5s;
 }
 
-.navigation .btnLogin-popup:hover{
+.btnLogin-popup:hover{
     background: whitesmoke;
     color: orange;
 }
@@ -298,9 +297,7 @@ footer{
     .Menu2{
         display: table-row;
     }
-    .navigation .btnLogin-popup{
-        margin-top: 10px;
-    }
+
     .table1, #contact_label{
         display: none;
     }
